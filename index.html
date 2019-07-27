@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> -->
+
+  <title>GPSMOVIL | Transporte</title>
+
+  <!-- Bootstrap -->
+  <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="vendors/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Datatables -->
+  <link href="vendors/datatables.net/datatables.min.css" rel="stylesheet">
+  <link href="vendors/datatables.net/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- SweetAlert2 -->
+  <script src="vendors/sweetalert2/dist/sweetalert2.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="assets/css/custom.min.css" rel="stylesheet">
+  <link href="vendors/dropzone/dropzone.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="./assets/css/inputFile.css"> -->
+  <!-- Seleect2 -->
+  <link href='vendors/select2/css/select2.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="nav-md">
+  <div class="container body panelPrincipal" style="display: none">
+    <div class="main_container">
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="text-align: center;">
+            <a href="index.html" class="site_title">
+              <span>GPSMOVIL</span>
+            </a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="images/LogoICESmall.png" alt="..."
+                style="width:70px;height:70px;border-radius:50%;margin-top:10%">
+            </div>
+            <div class="profile_info">
+              <span><span>Bienvenido,</span></span>
+              <h2>Conductor</h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <h3>General</h3>
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-rocket"></i> Traslados <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Pasajeros</a></li>
+                    <!-- <li><a href="consultaBitacora.html">Consultas</a></li> -->
+                  </ul>
+                </li>
+                <!-- <li><a><i class="fa fa-address-book-o"></i> Gestión WAS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="responsables.html">Responsables</a></li>
+                  </ul>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+        </div>
+      </div>
+
+      <!-- top navigation -->
+      <div class="top_nav">
+        <div class="nav_menu">
+          <nav>
+            <div class="nav toggle">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li class="">
+                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="images/img.png" alt="">Conductor
+                  <span class=" fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Salir</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- /top navigation -->
+
+      <!-- page content -->
+      <div class="right_col" role="main">
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>Pasajeros
+                <!-- <small>de acceso a personal autorizado</small> -->
+              </h3>
+            </div>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h5>Seleccione su Vehículo</h5>
+                  <select class="form-control" style="height: 2.7em;" id="sel_buscaDevice">
+                    <option value="-1" selected disabled>Seleccione su Vehículo...</option>
+                  </select>
+                  <div class="nav navbar-right panel_toolbox">
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="table-responsive">
+                    <table id="tbl_apps" class="table table-striped jambo_table bulk_action">
+                      <thead>
+                      </thead>
+
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /page content -->
+
+
+    <!-- footer content -->
+    <footer>
+      <div class="pull-right">
+        GPSMOVIL - Gestión Transporte
+      </div>
+      <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="mdl_login" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Bienvenido..!</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Correo</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="inp_modal_email" placeholder="ejemplo@mail.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Contraseña</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="inp_modal_paswd" placeholder="Nombre123">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" id="btn_modal_ingresar">Ingresar</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="assets/js/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- NProgress -->
+  <script src="vendors/nprogress/nprogress.js"></script>
+  <!-- JS dataTables -->
+  <script src="vendors/datatables.net/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+  <script src="vendors/datatables.net/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="vendors/sweetalert2/dist/sweetalert2.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="vendors/moment/min/moment.min.js"></script>
+  <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- JS Scripts -->
+  <script src="assets/js/usuario.js"></script>
+  <script src="assets/js/device.js"></script>
+  <!-- Seleect2 -->
+  <script src='vendors/select2/js/select2.js'></script>
+  <!-- Custom Theme Scripts -->
+  <script src="assets/js/custom.js"></script>
+  <script src="vendors/dropzone/dropzone.js"></script>
+  <!-- <script src="./assets/js/inputFile.js"></script> -->
+
+</body>
+
+</html>
+
+<script>
+  // Dropzone.autoDiscover = false;
+  $(document).ready(function () {
+
+
+    $('#mdl_login').modal('toggle');
+    $("#btn_modal_ingresar").click(function (e) {
+      e.preventDefault();
+      usuario.correo = $("#inp_modal_email").val();
+      usuario.passwd = $("#inp_modal_paswd").val();
+      usuario.Login;
+      device.LoadbyUser;
+    })
+    $("#sel_buscaDevice").change(function () {
+      device.id = $("#sel_buscaDevice").val();
+    })
+
+
+  });
+
+</script>
