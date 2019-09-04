@@ -20,8 +20,6 @@
   <link href="vendors/datatables.net/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet">
   <!-- NProgress -->
   <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
-  <!-- SweetAlert2 -->
-  <script src="vendors/sweetalert2/dist/sweetalert2.js"></script>
   <!-- bootstrap-daterangepicker -->
   <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
   <!-- Custom Theme Style -->
@@ -33,8 +31,14 @@
 </head>
 
 <body>
+  <div style="margin: 5vh;">
+    <!-- <div style="text-align: center;">
+      <img src="assets/images/logo.jpeg" style="max-width: 30vh; margin-bottom: 5%" alt="">
+    </div> -->
+    <!-- <a href="tel:+34000000000">Clicka para llamar</a> -->
 
-    <form class="form-horizontal" role="form" id="frm_registro" action="">
+    <div id=panel_codigoEmpresa style="display: none">
+      <form class="form-horizontal" role="form" id="frm_registroEmpresa" action="">
         <div class="form-group">
           <label for="inp_codigoEmpresa" class="col-sm-3 control-label">Codigo de Empresa</label>
           <div class="col-sm-9">
@@ -43,150 +47,170 @@
           </div>
         </div>
         <hr>
+        <div class="col-md-12">
+          <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;"
+            id="btn_frm_empresaContinuar" value="Continuar" />
+        </div>
+      </form>
+
+    </div>
+
+    <div id="panel_crearCuenta" style="display: none">
+      <form class="form-horizontal" role="form" id="frm_registroUsuario" name="frm_registroUsuario" action="">
         <div class="form-group">
-          <label for="inp_nombreResponsable" class="col-sm-3 control-label">Persona Responsable:</label>
+          <label for="inp_nombreResponsable" class="col-sm-3 control-label">Nombre Completo:</label>
           <div class="col-sm-9">
-            <input id="inp_nombreResponsable" type="text" class="form-control"
-              placeholder="Ingrese el nombre de la persona Responsable" minlength="5" required/>
+            <input id="inp_nombreResponsable" name="inp_nombreResponsable" type="text" class="form-control"
+              placeholder="Ingrese el nombre de la persona Responsable" minlength="5" required />
           </div>
         </div>
         <div class="form-group">
-          <label for="inp_identificacionResponsable" class="col-sm-3 control-label">Cedula
-            Responsable:</label>
+          <label for="inp_identificacionResponsable" class="col-sm-3 control-label">Cédula
+            Identidad:</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" id="inp_identificacionResponsable"
-              placeholder="Digite la cedula de la persona Responsable" minlength="9" required/>
+              name="inp_identificacionResponsable" placeholder="Digite la cedula de la persona Responsable"
+              minlength="9" required />
           </div>
         </div>
         <div class="form-group">
-          <label for="inp_emailResponsable" class="col-sm-3 control-label">Correo de Responsable:</label>
+          <label for="inp_telefonoResponsable" class="col-sm-3 control-label">Teléfono:</label>
           <div class="col-sm-9">
-            <input type="email" class="form-control" id="inp_emailResponsable"
-              placeholder="Ingrese el correo electronico de la persona Responsable" minlength="5" required/>
+            <input type="text" class="form-control" id="inp_telefonoResponsable" name="inp_telefonoResponsable"
+              placeholder="Digite su numero de teléfono" minlength="8" maxlength="8" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inp_emailResponsable" class="col-sm-3 control-label">Correo Electronico:</label>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" id="inp_emailResponsable" name="inp_emailResponsable"
+              autocomplete="username" placeholder="Ingrese el correo electronico de la persona Responsable"
+              minlength="5" required />
           </div>
         </div>
         <div class="form-group">
           <label for="inp_passwdResponsable" class="col-sm-3 control-label">Crear Contraseña:</label>
           <div class="col-sm-9">
             <input type="password" name="inp_passwdResponsable" autocomplete="new-password" class="form-control"
-              id="inp_passwdResponsable" placeholder="Crear Nueva Contraseña para el Sistema" minlength="5" required/>
+              id="inp_passwdResponsable" placeholder="Crear Nueva Contraseña para el Sistema" minlength="5" required />
           </div>
         </div>
         <div class="form-group">
-          <label for="inp_valPasswdResponsable" autocomplete="new-password" class="col-sm-3 control-label">Validar
+          <label for="inp_valPasswdResponsable" class="col-sm-3 control-label">Validar
             Contraseña:</label>
           <div class="col-sm-9">
-            <input id="inp_valPasswdResponsable" type="password" class="form-control"
-              placeholder="Repita Nueva Contraseña para el Sistema" minlength="5" required/>
-          </div>
-        </div>
-        <hr>
-        <div class="form-group">
-          <label for="inp_nombrePasajero" class="col-sm-3 control-label">Nombre de Pasajero:</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="inp_nombrePasajero"
-              placeholder="Ingrese el nombre completo del pasajero" minlength="5" required/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inp_identificacionPasajero" class="col-sm-3 control-label">Identificacion del
-            Pasajero:</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="inp_identificacionPasajero"
-              placeholder="Ingrese la Identificación del Pasajero" minlength="9" required/>
+            <input id="inp_valPasswdResponsable" name="inp_valPasswdResponsable" autocomplete="new-password"
+              type="password" class="form-control" placeholder="Repita Nueva Contraseña para el Sistema" minlength="5"
+              required />
           </div>
         </div>
         <hr>
         <div class="col-md-12">
           <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;"
-            id="btn_registrarPasajero" value="Registrar"/>
+            id="btn_registrarResponsable" value="Crear Cuenta" />
+        </div>
+        <br>
+        <div class="col-md-12">
+          <input type="submit" class="btn btn-danger" style="width: -webkit-fill-available;" id="btn_atras"
+            value="Atras" />
+        </div>
+      </form>
+    </div>
+
+    <div id="panel_volver" style="display: none;margin-top: 20vh;text-align: center;">
+      <h3>Presione atrás</h3>
+      <h3>para regresar</h3>
+      <h3>al inicio</h3>
+    </div>
+
+    <div id="panel_gestionPasajero" style="display: none;margin-top: 3vh;text-align: right;">
+      <button type="button" class="btn btn-primary" id="btn_registrarPasajero" style="margin-bottom: 1vh;">Nuevo
+        Pasajero</button>
+      <table id="tbl_pasajeros" class="display" style="width:100%">
+        <!-- <thead>
+          <tr>
+            <th>Pasajero</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jason Rojas Valverde</td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Cancelar Viaje</a></li>
+                  <li><a href="#">Editar Nombre</a></li>
+                  <li><a href="#">Eliminar</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Rafael Marin Rodriguez</td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                  <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Cancelar Viaje</a></li>
+                  <li><a href="#">Editar Nombre</a></li>
+                  <li><a href="#">Eliminar</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody> -->
+      </table>
+    </div>
+
+    <div id="panel_registroPasajero" style="display: none;margin-top: 3vh;text-align: right;">
+
+      <form style="text-align: left" class="form-horizontal" role="form" id="frm_registroPasajero"
+        name="frm_registroPasajero" action="">
+        <div class="form-group">
+          <label for="inp_identificacionPasajero" class="col-sm-3 control-label">Cédula
+            Identidad:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inp_identificacionPasajero" name="inp_identificacionPasajero"
+              placeholder="Digite la cedula" minlength="9" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inp_nombrePasajero" class="col-sm-3 control-label">Nombre Completo:</label>
+          <div class="col-sm-9">
+            <input id="inp_nombrePasajero" name="inp_nombrePasajero" type="text" class="form-control"
+              placeholder="Ingrese el nombre completo" minlength="5" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inp_codTransportista" class="col-sm-3 control-label">Codigo Transportista:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inp_codTransportista" name="inp_codTransportista"
+              placeholder="Digite el nombre del transportista" minlength="1" maxlength="5" required />
+          </div>
+        </div>
+        <hr>
+        <div class="col-md-12">
+          <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;" id="btn_crearPasajero"
+            value="Agregar" />
+        </div>
+        <br>
+        <div class="col-md-12">
+          <input type="submit" class="btn btn-danger" style="width: -webkit-fill-available;"
+            id="btn_frmAgregaPasajeroAtras" value="Atras" />
         </div>
       </form>
 
-  <!-- Modal -->
-  <div class="modal fade" id="mdl_registrarPasajero" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Bienvenido..!</h4>
-        </div>
-        <div class="modal-body">
-          <!-- <form class="form-horizontal" role="form" id="frm_registro" action="">
-            <div class="form-group">
-              <label for="inp_codigoEmpresa" class="col-sm-3 control-label">Codigo de Empresa</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inp_codigoEmpresa" minlength="1" required
-                  placeholder="Digite el codigo de la empresa" />
-              </div>
-            </div>
-            <hr>
-            <div class="form-group">
-              <label for="inp_nombreResponsable" class="col-sm-3 control-label">Persona Responsable:</label>
-              <div class="col-sm-9">
-                <input id="inp_nombreResponsable" type="text" class="form-control"
-                  placeholder="Ingrese el nombre de la persona Responsable" minlength="5" required/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inp_identificacionResponsable" class="col-sm-3 control-label">Cedula
-                Responsable:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inp_identificacionResponsable"
-                  placeholder="Digite la cedula de la persona Responsable" minlength="9" required/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inp_emailResponsable" class="col-sm-3 control-label">Correo de Responsable:</label>
-              <div class="col-sm-9">
-                <input type="email" class="form-control" id="inp_emailResponsable"
-                  placeholder="Ingrese el correo electronico de la persona Responsable" minlength="5" required/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inp_passwdResponsable" class="col-sm-3 control-label">Crear Contraseña:</label>
-              <div class="col-sm-9">
-                <input type="password" name="inp_passwdResponsable" autocomplete="new-password" class="form-control"
-                  id="inp_passwdResponsable" placeholder="Crear Nueva Contraseña para el Sistema" minlength="5" required/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inp_valPasswdResponsable" autocomplete="new-password" class="col-sm-3 control-label">Validar
-                Contraseña:</label>
-              <div class="col-sm-9">
-                <input id="inp_valPasswdResponsable" type="password" class="form-control"
-                  placeholder="Repita Nueva Contraseña para el Sistema" minlength="5" required/>
-              </div>
-            </div>
-            <hr>
-            <div class="form-group">
-              <label for="inp_nombrePasajero" class="col-sm-3 control-label">Nombre de Pasajero:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inp_nombrePasajero"
-                  placeholder="Ingrese el nombre completo del pasajero" minlength="5" required/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inp_identificacionPasajero" class="col-sm-3 control-label">Identificacion del
-                Pasajero:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="inp_identificacionPasajero"
-                  placeholder="Ingrese la Identificación del Pasajero" minlength="9" required/>
-              </div>
-            </div>
-            <hr>
-            <div class="col-md-12">
-              <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;"
-                id="btn_registrarPasajero" value="Registrar"/>
-            </div>
-          </form> -->
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="submit" class="btn btn-default" id="btn_registrarPasajero">Registrar</button>
-        </div> -->
-      </div>
+
+
     </div>
   </div>
+
 
 
   <!-- jQuery -->
@@ -201,7 +225,10 @@
   <!-- bootstrap-progressbar -->
   <script src="vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
   <!-- SweetAlert2 -->
-  <script src="vendors/sweetalert2/dist/sweetalert2.js"></script>
+  <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+  <!-- <script src="vendors/sweetalert2/promise-polyfill.js"></script> -->
+  <script src="vendors/sweetalert2/sweetalert2@8.js"></script>
+  <script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
   <!-- bootstrap-daterangepicker -->
   <script src="vendors/moment/min/moment.min.js"></script>
   <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -210,6 +237,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.js"></script>
   <!-- JS Scripts -->
+  <script src="assets/js/usuario.js"></script>
   <script src="assets/js/pasajero.js"></script>
   <!-- Seleect2 -->
   <script src='vendors/select2/js/select2.js'></script>
@@ -222,32 +250,52 @@
 </html>
 
 <script>
-  // jQuery.validator.setDefaults({
-  //   debug: true,
-  //   success: "valid"
-  // });
+  // var url_string = 
+  var url = new URL(window.location.href);
+  var responsableId = null;
+  responsableId = url.searchParams.get("responsableId");
+  var opcion = url.searchParams.get("opcion");
 
-  // $("#frm_registro").validate();
-  // var validator = $("#frm_registro").validate();
-  // var valForm;
   $(document).ready(function () {
+    clear();
+    opcion == "registroResponsable" ? $('#panel_codigoEmpresa').show() : opcion == "registroPasajero" ? pagePasajero() : false;
 
-    // $('#mdl_registrarPasajero').modal('toggle');
+    function pagePasajero() {
+      pasajero.idResponsable = responsableId;
+      $('#panel_gestionPasajero').show()
+      pasajero.ReadAll_list;
+    }
+
+    $('#inp_identificacionPasajero').change(function() {
+      if ($(this).val().length > 8) {
+        pasajero.cedula = $(this).val();
+        pasajero.Search_cedula
+      }
+    });
 
     $("#btn_registrarPasajero").click(function (e) {
       e.preventDefault();
-      pasajero.codigoEmpresa = $("#inp_codigoEmpresa").val();
-      pasajero.nombreResponsable = $("#inp_nombreResponsable").val();
-      pasajero.identificacionResponsable = $("#inp_identificacionResponsable").val();
-      pasajero.emailResponsable = $("#inp_emailResponsable").val();
-      pasajero.passwdResponsable = $("#inp_passwdResponsable").val();
-      pasajero.nombrePasajero = $("#inp_nombrePasajero").val();
-      pasajero.identificacionPasajero = $("#inp_identificacionPasajero").val();
-      // valForm = validator.form();
-      // if (valForm){
-        pasajero.Registrar;
-      //   clear();
-      // }
+      clear();
+      $('#tbl_pasajeros').css('display', 'none');
+      $("#btn_registrarPasajero").css('display', 'none');
+      $('#panel_registroPasajero').show()
+    })
+
+    $("#btn_frmAgregaPasajeroAtras").click(function (e) {
+      e.preventDefault();
+      clear();
+      $('#tbl_pasajeros').show();
+      $("#panel_gestionPasajero").show();
+      $("#btn_registrarPasajero").show();
+      $('#panel_registroPasajero').css('display', 'none');
+    })
+
+    validateRules();
+
+    $("#btn_atras").click(function (e) {
+      e.preventDefault();
+      $('#panel_crearCuenta').css('display', 'none');
+      $('#panel_codigoEmpresa').show()
     })
 
     function clear() {
@@ -256,10 +304,113 @@
       $("#inp_identificacionResponsable").val("");
       $("#inp_emailResponsable").val("");
       $("#inp_passwdResponsable").val("");
+      $("#inp_valPasswdResponsable").val("");
+      $("#inp_telefonoResponsable").val("");
       $("#inp_nombrePasajero").val("");
       $("#inp_identificacionPasajero").val("");
+      $("#inp_nombrePasajero").val("");
+      $("#inp_codTransportista").val("");
     }
 
   });
+
+  function validateRules() {
+
+
+    $(function () {
+      $("#frm_registroPasajero").validate({
+        rules: {
+          'inp_identificacionPasajero': {
+            required: true,
+            number: true,
+            minlength: 5
+          },
+          'inp_nombrePasajero': {
+            required: true,
+            minlength: 5
+          },
+          'inp_codTransportista': {
+            required: true,
+            number: true,
+            minlength: 1,
+            maxlength: 3
+          }
+        },
+        submitHandler: function () {
+          pasajero.codigoEmpresa = $("#inp_codTransportista").val();
+          pasajero.nombre = $("#inp_nombrePasajero").val();
+          pasajero.cedula = $("#inp_identificacionPasajero").val();
+          pasajero.idResponsable = responsableId;
+          pasajero.Registrar;
+
+          $('#tbl_pasajeros').show();
+          $("#panel_gestionPasajero").show();
+          $("#btn_registrarPasajero").show();
+          $('#panel_registroPasajero').css('display', 'none');
+        }
+      });
+
+      $("#frm_registroEmpresa").validate({
+        rules: {
+          'inp_codigoEmpresa': {
+            required: true,
+            number: true
+          }
+        },
+        submitHandler: function (form) {
+          usuario.codigoEmpresa = $("#inp_codigoEmpresa").val();
+          usuario.Buscar_id;
+        }
+      });
+
+      $("#frm_registroUsuario").validate({
+        rules: {
+          'inp_nombreResponsable': {
+            required: true,
+            minlength: 5
+          },
+          'inp_identificacionResponsable': {
+            required: true,
+            minlength: 9
+          },
+          'inp_telefonoResponsable': {
+            required: true,
+            minlength: 8,
+            maxlength: 8
+          },
+          'inp_emailResponsable': {
+            required: true,
+            email: true
+          },
+          'inp_passwdResponsable': {
+            required: true,
+            minlength: 5
+          },
+          'inp_valPasswdResponsable': {
+            required: true,
+            minlength: 5,
+            equalTo: "#inp_passwdResponsable"
+          },
+          'password': {
+            required: true,
+            minlength: 5
+          }
+        },
+        submitHandler: function (form) {
+          usuario.codigoEmpresa = $("#inp_codigoEmpresa").val();
+          usuario.nombre = $("#inp_nombreResponsable").val();
+          usuario.cedula = $("#inp_identificacionResponsable").val();
+          usuario.telefono = $("#inp_telefonoResponsable").val();
+          usuario.correo = $("#inp_emailResponsable").val();
+          usuario.passwd = $("#inp_passwdResponsable").val();
+          usuario.Registrar;
+          clear();
+        }
+      });
+
+    });
+
+
+  }
 
 </script>

@@ -56,7 +56,7 @@ class Device{
 
     function LoadbyUser(){
         try {
-            $a = GPSMOVIL::devices($this->idUser);
+            $a = GPSMOVIL::devices($this->id);
             $response = json_decode($a->response);
             if ( $response ){
                 return $response;

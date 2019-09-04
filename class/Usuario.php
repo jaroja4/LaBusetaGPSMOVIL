@@ -14,6 +14,12 @@ if( isset($_POST["action"])){
         case "Login":
             echo json_encode($usuario->Login());
             break;
+        case "Registrar":
+            echo json_encode($usuario->Registrar());
+            break;
+        case "Buscar_id":
+            echo json_encode($usuario->ValidarUsuario());
+            break;
     }
 }
 
@@ -28,7 +34,7 @@ class Usuario{
     public $longitude=""; 
     public $zoom=""; 
     public $twelvehourformat=""; 
-    public $attributes=""; 
+    public $attributes=[]; 
     public $disabled=""; 
     public $devicelimit=""; 
     public $token=""; 
@@ -59,23 +65,39 @@ class Usuario{
             $this->devicelimit=$obj["devicelimit"] ?? NULL; 
             $this->token=$obj["token"] ?? NULL; 
             $this->devicereadonly=$obj["devicereadonly"] ?? NULL; 
-            $this->phone=$obj["phone"] ?? NULL;
+            $this->phone=$obj["telefono"] ?? NULL;
             $this->legalDocument=$obj["legalDocument"] ?? NULL;
         }
     }
 
-    function Login(){
+    
+    function Registrar(){
         try {
-            $a = GPSMOVIL::login($this->email,$this->passwd);
-            $response = json_decode($a->response);
-            if ( isset($response->disabled) ){
-                if ($response->disabled == false){
-                    return $response;
+            $res = null;
+            $this->attributes["grupo"] = "planPiloto";            
+            if ( !$this->ValidarUsuario() ){
+                $API_res = GPSMOVIL::userAdd($this->name, $this->email, $this->passwd,  $this->attributes);
+                switch ($API_res->responseCode) {
+                    case 415:
+                        $res = "repetido";
+                        break;
+                    case 202:
+                        $res = "sinrespuesta";
+                        break;
+                    case 200:
+                        $res = true;
+                        break;
+                    default:
+                        $res = false;
                 }
+                $this->id = json_decode($API_res->response)->id;
+                // if ( !$this->ValidarUsuarioXEmpresa($this->attributes["codigoEmpresa"]) ){
+                //     $API_res = GPSMOVIL::assignUserManagedUser($this->id, $this->attributes["codigoEmpresa"]);
+                // }    
+                return "success";
             }
             else
-                return false;
-
+                return "existe";
         }     
         catch(Exception $e) {
             error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
@@ -88,16 +110,17 @@ class Usuario{
     }
 
     public function ValidarUsuario(){
-        $param = '%cedula":"'.  $this->identificacion . '%';
+        $param = '%cedula":"'.  $this->attributes["cedula"] . '%';
         $sql="SELECT id, name, email, readonly, administrator, map, latitude, longitude, zoom, twelvehourformat, 
             attributes, disabled, devicelimit, token, devicereadonly, phone
         FROM tc_users
         WHERE email = '" . $this->email . "'
+        OR id = '" . $this->id . "'
         OR attributes LIKE '".  $param . "';";
         $data = DATA::Ejecutar($sql);  
         if ($data){
             $this->id = $data[0]["id"];
-            return true;
+            return "existe";
         }
         else
             return false;        
@@ -115,6 +138,46 @@ class Usuario{
         else
             return false;        
     }
+
+    // function Login(){
+    //     try {
+    //         $a = GPSMOVIL::login($this->email,$this->passwd);
+    //         $response = json_decode($a->response);
+    //         if ( isset($response->disabled) ){
+    //             if ($response->disabled == false){
+    //                 return $response;
+    //             }
+    //         }
+    //         else
+    //             return false;
+
+    //     }     
+    //     catch(Exception $e) {
+    //         error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+    //         header('HTTP/1.0 400 Bad error');
+    //         die(json_encode(array(
+    //             'code' => $e->getCode() ,
+    //             'msg' => 'Error al cargar la lista'))
+    //         );
+    //     }
+    // }
+
+
+
+
+
+    // public function ValidarEmpresa($codigoEmpresa){
+    //     $sql="SELECT userid, manageduserid
+    //         FROM tc_user_user
+    //         WHERE userid = :userid
+    //         AND manageduserid = :manageduserid;";
+    //     $param= array(':userid'=>$this->id, ':manageduserid'=>$codigoEmpresa);            
+    //     $data= DATA::Ejecutar($sql, $param);
+    //     if ($data)
+    //         return $data[0]["userid"];
+    //     else
+    //         return false;        
+    // }
 }
 
 ?>
