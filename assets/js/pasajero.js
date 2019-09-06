@@ -22,10 +22,10 @@ class Pasajero {
                 obj: JSON.stringify(pasajero)
             }
         })
-            .done(function (e) {                
+            .done(function (e) {
                 pasajero.ReadAll_list;
                 var data = JSON.parse(e);
-                if (data) {                    
+                if (data) {
                     Swal.fire({
                         title: 'Listo!',
                         type: 'success',
@@ -59,7 +59,7 @@ class Pasajero {
             });
     }
 
-    get Search_cedula(){
+    get Search_cedula() {
         var miAccion = 'Search_cedula';
         $.ajax({
             type: "POST",
@@ -77,33 +77,73 @@ class Pasajero {
             });
     }
 
-    loadPasajeroData(e){        
+    loadPasajeroData(e) {
         var dataPasajero = JSON.parse(e);
 
         $('#inp_identificacionPasajero').val(dataPasajero[0]["document"]);
         $('#inp_nombrePasajero').val(dataPasajero[0]["name"]);
         $('#inp_codTransportista').val();
-        
+
 
     }
 
-    EditarPasajero(obj){
-        var pasajeroEditar = $('#tbl_pasajeros').DataTable().row(obj.parentElement.parentElement.parentElement.parentElement.parentElement).data().id
-        alert (pasajeroEditar);
+    EditarPasajero(obj) {
+        alert("Editar pasajero con id: " + obj);
+    }
+    CancelaViajePasajero(obj) {
+        alert("Cancelar viaje para pasajero con id: " + obj);
+    }
+    EliminarPasajero(obj) {
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "Desea borrar este pasajero!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, borrar!',
+            cancelButtonText: 'No, cancelar!',
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "class/Pasajero.php",
+                    data: {
+                        action: "Delete",
+                        id: obj
+                    }
+                })
+                    .done(function (e) {
+                        pasajero.ReadAll_list;
+
+                        Swal.fire(
+                            'Eliminado!',
+                            'Pasajero Eliminado.',
+                            'success'
+                        )
+                    })
+                    .always(function (e) {
+
+                    })
+                    .fail(function (e) {
+                        // usuario.showError(e);
+                    });
+            }
+        })
     }
 
     drawPasajerosDataTable(e) {
-        if (e){
+        if (e) {
             var dataPasajero = JSON.parse(e);
-            
+
             $('#tbl_pasajeros').DataTable({
                 data: dataPasajero,
                 destroy: true,
                 autoWidth: false,
-                paging:   false,
+                paging: false,
                 ordering: false,
                 searching: false,
-                info:     false,
+                info: false,
                 order: [
                     [1, "asc"]
                 ],
@@ -125,16 +165,16 @@ class Pasajero {
                         targets: 3,
                         visible: true,
                         width: "5%",
-                        mRender: function (e) {
-                            return dropPasajero;
+                        mRender: function (data, type, row) {
+                            return pasajero.drawBoton(row.id);
                         }
                     }
                 ],
-                fnDrawCallback: function() {
+                fnDrawCallback: function () {
                     $("#tbl_pasajeros thead").remove();
-                  }
+                }
             });
-    
+
             $('#tbl_pasajeros tbody').on('click', 'tr', function () {
                 // pasajero.clear;
                 // pasajero.id = $('#tbl_pasajeros').DataTable().row(this).data().id;
@@ -143,17 +183,20 @@ class Pasajero {
 
         }
     }
+
+    drawBoton(id) {
+        var dropPasajero = `<div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+        <i class="fa fa-address-card-o " aria-hidden="true"></i> 
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><p onclick="pasajero.CancelaViajePasajero(${id})">Cancelar Viaje</p></li>
+          <li><p onclick="pasajero.EditarPasajero(${id})">Editar Nombre</p></li>
+          <li><p onclick="pasajero.EliminarPasajero(${id})">Eliminar</p></li>
+        </ul>
+      </div>`;
+      return dropPasajero;
+    }
 }
 
 let pasajero = new Pasajero();
-
-dropPasajero = `<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-    <i class="fa fa-address-card-o " aria-hidden="true"></i> 
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><p onclick="pasajero.CancelaViajePasajero(this)">Cancelar Viaje</p></li>
-      <li><p onclick="pasajero.EditarPasajero(this)">Editar Nombre</p></li>
-      <li><p onclick="pasajero.EliminarPasajero(this)">Eliminar</p></li>
-    </ul>
-  </div>`;

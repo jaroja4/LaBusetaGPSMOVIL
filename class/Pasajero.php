@@ -21,6 +21,9 @@ if( isset($_POST["action"])){
         case "Search_cedula":
             echo json_encode($pasajero->Search_cedula());
             break;
+        case "Delete":
+            echo json_encode($pasajero->Delete());
+            break;
 }
 }
 
@@ -56,6 +59,10 @@ class Pasajero{
             ON u.id = up.userid
             WHERE u.id = :idResponsable;';
             $param= array(':idResponsable'=>$this->idResponsable);
+            
+            error_log("idResponsable: ".$this->idResponsable, 0);            
+            error_log("SQL: ".$sql, 0);
+
             $data= DATA::Ejecutar($sql, $param);
             if($data){
                 return $data;
@@ -154,6 +161,20 @@ class Pasajero{
             return $data[0]["id"];
         else
             return false;        
+    }
+
+    function Delete(){
+
+        
+        $sql="DELETE FROM tc_user_passenger 
+            WHERE passengerid = '" . $this->id . "';";
+        $data = DATA::Ejecutar($sql);  
+
+
+        $sql="DELETE FROM tc_passenger 
+            WHERE id = '" . $this->id . "';";
+        $data = DATA::Ejecutar($sql);
+        return true;        
     }
 
     function ValidarPasajeroXUsuario($userid, $passengerid){
