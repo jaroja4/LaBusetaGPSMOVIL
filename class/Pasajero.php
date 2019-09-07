@@ -52,14 +52,14 @@ class Pasajero{
     
     function ReadAll(){
         try {
-            $sql= 'SELECT p.id, p.name, p.document FROM gpsmovilpro.tc_passenger p
+            $sql= 'SELECT DISTICT p.id, p.name, p.document FROM gpsmovilpro.tc_passenger p
             INNER JOIN tc_user_passenger up
             ON p.id = up.passengerid
             INNER JOIN tc_users u
             ON u.id = up.userid
             WHERE u.id = :idResponsable;';
             $param= array(':idResponsable'=>$this->idResponsable);
-            
+
             error_log("idResponsable: ".$this->idResponsable, 0);            
             error_log("SQL: ".$sql, 0);
 
