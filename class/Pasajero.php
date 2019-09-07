@@ -52,7 +52,7 @@ class Pasajero{
     
     function ReadAll(){
         try {
-            $sql= 'SELECT DISTICT p.id, p.name, p.document FROM gpsmovilpro.tc_passenger p
+            $sql= 'SELECT DISTINCT p.id, p.name, p.document FROM gpsmovilpro.tc_passenger p
             INNER JOIN tc_user_passenger up
             ON p.id = up.passengerid
             INNER JOIN tc_users u
