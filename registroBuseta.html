@@ -127,44 +127,6 @@
       <button type="button" class="btn btn-primary" id="btn_registrarPasajero" style="margin-bottom: 1vh;">Nuevo
         Pasajero</button>
       <table id="tbl_pasajeros" class="display" style="width:100%">
-        <!-- <thead>
-          <tr>
-            <th>Pasajero</th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Jason Rojas Valverde</td>
-            <td>
-              <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                  <i class="fa fa-cog" aria-hidden="true"></i>
-                  <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Cancelar Viaje</a></li>
-                  <li><a href="#">Editar Nombre</a></li>
-                  <li><a href="#">Eliminar</a></li>
-                </ul>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Rafael Marin Rodriguez</td>
-            <td>
-              <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                  <i class="fa fa-cog" aria-hidden="true"></i>
-                  <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Cancelar Viaje</a></li>
-                  <li><a href="#">Editar Nombre</a></li>
-                  <li><a href="#">Eliminar</a></li>
-                </ul>
-              </div>
-            </td>
-          </tr>
-        </tbody> -->
       </table>
     </div>
 
@@ -211,6 +173,61 @@
     </div>
   </div>
 
+
+  <!-- Modal -->
+  <div id="mdl_editaPasajero" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Editar Pasajero</h4>
+        </div>
+        <div class="modal-body">
+          <form style="text-align: left" class="form-horizontal" role="form" id="frm_registroPasajero"
+            name="frm_registroPasajero" action="">
+            <div class="form-group">
+              <label for="inp_identificacionPasajero" class="col-sm-3 control-label">Cédula
+                Identidad:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inp_identificacionPasajero"
+                  name="inp_identificacionPasajero" placeholder="Digite la cedula" minlength="9" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inp_nombrePasajero" class="col-sm-3 control-label">Nombre Completo:</label>
+              <div class="col-sm-9">
+                <input id="inp_nombrePasajero" name="inp_nombrePasajero" type="text" class="form-control"
+                  placeholder="Ingrese el nombre completo" minlength="5" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inp_codTransportista" class="col-sm-3 control-label">Codigo Transportista:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inp_codTransportista" name="inp_codTransportista"
+                  placeholder="Digite el nombre del transportista" minlength="1" maxlength="5" required />
+              </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+              <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;" id="btn_crearPasajero"
+                value="Agregar" />
+            </div>
+            <br>
+            <div class="col-md-12">
+              <input type="submit" class="btn btn-danger" style="width: -webkit-fill-available;"
+                id="btn_frmAgregaPasajeroAtras" value="Atras" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 
   <!-- jQuery -->
@@ -266,7 +283,7 @@
       pasajero.ReadAll_list;
     }
 
-    $('#inp_identificacionPasajero').change(function() {
+    $('#inp_identificacionPasajero').change(function () {
       if ($(this).val().length > 8) {
         pasajero.cedula = $(this).val();
         pasajero.Search_cedula
@@ -337,6 +354,7 @@
           }
         },
         submitHandler: function () {
+          event.preventDefault();
           pasajero.codigoEmpresa = $("#inp_codTransportista").val();
           pasajero.nombre = $("#inp_nombrePasajero").val();
           pasajero.cedula = $("#inp_identificacionPasajero").val();
@@ -358,6 +376,7 @@
           }
         },
         submitHandler: function (form) {
+          event.preventDefault();
           usuario.codigoEmpresa = $("#inp_codigoEmpresa").val();
           usuario.Buscar_id;
         }
@@ -397,6 +416,7 @@
           }
         },
         submitHandler: function (form) {
+          event.preventDefault();
           usuario.codigoEmpresa = $("#inp_codigoEmpresa").val();
           usuario.nombre = $("#inp_nombreResponsable").val();
           usuario.cedula = $("#inp_identificacionResponsable").val();
@@ -404,7 +424,7 @@
           usuario.correo = $("#inp_emailResponsable").val();
           usuario.passwd = $("#inp_passwdResponsable").val();
           usuario.Registrar;
-          clear();
+          this.clear();
         }
       });
 

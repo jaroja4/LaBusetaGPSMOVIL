@@ -88,7 +88,9 @@ class Pasajero {
     }
 
     EditarPasajero(obj) {
-        alert("Editar pasajero con id: " + obj);
+        $('#mdl_editaPasajero').modal('show');
+
+        // alert("Editar pasajero con id: " + obj);
     }
     CancelaViajePasajero(obj) {
         alert("Cancelar viaje para pasajero con id: " + obj);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="icon" href="images/favicon.ico" type="image/ico" /> -->
+
+    <title>GPSMOVIL | Transporte</title>
+
+    <!-- Bootstrap -->
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="vendors/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="vendors/datatables.net/datatables.min.css" rel="stylesheet">
+    <link href="vendors/datatables.net/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <!-- <link href="assets/css/custom.min.css" rel="stylesheet"> -->
+    <link href="vendors/dropzone/dropzone.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="./assets/css/inputFile.css"> -->
+    <!-- Seleect2 -->
+    <link href='vendors/select2/css/select2.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div style="margin: 5vh;">
+        <div id=panel_selectDevice style="display: nones">
+            <form class="form-horizontal" role="form" id="frm_selDevice" action="">
+                <div class="form-group">
+                    <label for="sel1">Seleccione su BuseTica:</label>
+                    <select class="form-control" id="sel_frmSelDevice">
+
+                    </select>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;"
+                        id="btn_frm_SelDeviceContinuar" value="Continuar" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+
+    <!-- jQuery -->
+    <script src="assets/js/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- NProgress -->
+    <script src="vendors/nprogress/nprogress.js"></script>
+    <!-- JS dataTables -->
+    <script src="vendors/datatables.net/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables.net/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- SweetAlert2 -->
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    <!-- <script src="vendors/sweetalert2/promise-polyfill.js"></script> -->
+    <script src="vendors/sweetalert2/sweetalert2@8.js"></script>
+    <script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="vendors/moment/min/moment.min.js"></script>
+    <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- Jquery Validate -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.js"></script>
+    <!-- JS Scripts -->
+    <script src="assets/js/driver.js"></script>
+    <!-- Seleect2 -->
+    <script src='vendors/select2/js/select2.js'></script>
+    <!-- Custom Theme Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="vendors/dropzone/dropzone.js"></script>
+    <!-- <script src="./assets/js/inputFile.js"></script> -->
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        var url = new URL(window.location.href);
+        var responsableId = null;
+        driver.id = url.searchParams.get("responsableId");
+
+        driver.ReadDeviceByDriver;
+    })
+
+</script>
