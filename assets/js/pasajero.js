@@ -13,7 +13,7 @@ class Pasajero {
 
 
     get Registrar() {
-        var miAccion = 'Registrar';
+        var miAccion = $('#mdlTitle_Pasajero').html();
         $.ajax({
             type: "POST",
             url: "class/Pasajero.php",
@@ -25,13 +25,35 @@ class Pasajero {
             .done(function (e) {
                 pasajero.ReadAll_list;
                 var data = JSON.parse(e);
-                if (data) {
-                    Swal.fire({
-                        title: 'Listo!',
-                        type: 'success',
-                        timer: 1500
-                    })
+                var titulo = "Soporte!";
+                var tipo = "success";
+
+                switch (data) {
+                    case "invalidCodeTransport":
+                        titulo = "Empresa Transporte Invalida";
+                        tipo = "info";
+                        break;
+                    case "pasajeroRepetido":
+                        titulo = "El pasajero ya estaba registrado";
+                        tipo = "info";
+                        break;
+                    case "registrado":
+                        titulo = "Listo";
+                        break;
+                    case "actualizado":
+                        titulo = "Actualizado";
+                        break;
+                    case "cedulaInvalida":
+                        titulo = "La cedula ya se encuentra registrada";
+                        tipo = "info";
+                        break;
                 }
+                Swal.fire({
+                    title: titulo,
+                    type: tipo,
+                    timer: 1500
+                })
+                $('#mdl_Pasajero').modal('hide');
             })
             .always(function (e) {
 
@@ -78,23 +100,41 @@ class Pasajero {
     }
 
     loadPasajeroData(e) {
-        var dataPasajero = JSON.parse(e);
-
-        $('#inp_identificacionPasajero').val(dataPasajero[0]["document"]);
-        $('#inp_nombrePasajero').val(dataPasajero[0]["name"]);
-        $('#inp_codTransportista').val();
-
-
+        if (e != "null") {
+            var dataPasajero = JSON.parse(e);
+            $('#inp_identificacionPasajero').val(dataPasajero[0]["document"]);
+            $('#inp_nombrePasajero').val(dataPasajero[0]["name"]);
+            $('#inp_codTransportista').val(dataPasajero[0]["transportCode"]);
+        }
     }
 
     EditarPasajero(obj) {
-        $('#mdl_editaPasajero').modal('show');
-
-        // alert("Editar pasajero con id: " + obj);
+        pasajero.id = obj;
+        $.ajax({
+            type: "POST",
+            url: "class/Pasajero.php",
+            data: {
+                action: "LoadById",
+                id: obj
+            }
+        })
+            .done(function (e) {
+                var dataPasajero = JSON.parse(e);
+                $('#inp_identificacionPasajero').val(dataPasajero[0]["document"]);
+                $('#inp_nombrePasajero').val(dataPasajero[0]["name"]);
+                $('#inp_codTransportista').val(dataPasajero[0]["transportCode"]);
+                $('#tbl_pasajeros').css('display', 'none');
+                $("#btn_registrarPasajero").css('display', 'none');
+                $('#mdlTitle_Pasajero').html('Actualizar');
+                $('#btn_crearPasajero').val('Guardar');
+                $('#mdl_Pasajero').modal('show');
+            })
     }
+
     CancelaViajePasajero(obj) {
         alert("Cancelar viaje para pasajero con id: " + obj);
     }
+
     EliminarPasajero(obj) {
         Swal.fire({
             title: 'Esta seguro?',
@@ -168,7 +208,7 @@ class Pasajero {
                         visible: true,
                         width: "5%",
                         mRender: function (data, type, row) {
-                            return pasajero.drawBoton(row.id);
+                            return pasajero.drawBoton(row.id, row.status);
                         }
                     }
                 ],
@@ -186,18 +226,61 @@ class Pasajero {
         }
     }
 
-    drawBoton(id) {
-        var dropPasajero = `<div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-        <i class="fa fa-address-card-o " aria-hidden="true"></i> 
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><p onclick="pasajero.CancelaViajePasajero(${id})">Cancelar Viaje</p></li>
-          <li><p onclick="pasajero.EditarPasajero(${id})">Editar Nombre</p></li>
-          <li><p onclick="pasajero.EliminarPasajero(${id})">Eliminar</p></li>
-        </ul>
-      </div>`;
-      return dropPasajero;
+    handleClick(obj, id) {
+        if (obj.checked) {
+            // alert("check" + id);
+            Swal.fire({
+                position: 'top-start',
+                type: 'success',
+                title: 'Transporte Habilitado',
+                showConfirmButton: false,
+                timer: 1000,
+                width: '40%'
+            })
+        }
+        else {
+            Swal.fire({
+                position: 'top-start',
+                type: 'info',
+                title: 'Transporte Deshabilitado',
+                showConfirmButton: false,
+                width: '40%',
+                timer: 1000
+            })
+        }
+    }
+
+    drawBoton(id, estado) {
+        var btn_clase = "";
+        var btn_viaje = "";
+        switch (estado) {
+            case "0":
+                btn_clase = "danger";
+                btn_viaje = `<p style=" margin-left: 5px;" onclick="pasajero.HabilitaViajePasajero(${id})">Habilitar</p>`;
+                break;
+            case "1":
+                btn_clase = "success";
+                btn_viaje = `<p style=" margin-left: 5px;" onclick="pasajero.DeshabilitaViajePasajero(${id})">Deshabilitar</p>`;
+                break;
+            default:
+                btn_clase = "danger";
+                btn_viaje = `<p style=" margin-left: 5px;" onclick="pasajero.HabilitaViajePasajero(${id})">Habilitar</p>`;
+                break;
+
+        }
+
+        var dropPasajero = `<input class="apple-switch" onclick='pasajero.handleClick(this,${id})' type="checkbox">`;
+        //     var dropPasajero = `<div class="dropdown">
+        //     <button class="btn btn-${btn_clase} dropdown-toggle" type="button" data-toggle="dropdown">
+        //     <i class="fa fa-address-card-o " aria-hidden="true"></i> 
+        //     <span class="caret"></span></button>
+        //     <ul class="dropdown-menu">
+        //       <li><p style=" margin-left: 5px;" onclick="pasajero.EditarPasajero(${id})">Modificar</p></li>
+        //       <li>${btn_viaje}</li>
+        //       <li><p style=" margin-left: 5px;" onclick="pasajero.EliminarPasajero(${id})">Eliminar</p></li>
+        //     </ul>
+        //   </div>`;
+        return dropPasajero;
     }
 }
 

@@ -23,7 +23,7 @@
   <!-- bootstrap-daterangepicker -->
   <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
   <!-- Custom Theme Style -->
-  <!-- <link href="assets/css/custom.min.css" rel="stylesheet"> -->
+  <link href='assets/css/registro.css' rel='stylesheet' type='text/css'>
   <link href="vendors/dropzone/dropzone.css" rel="stylesheet">
   <!-- <link rel="stylesheet" href="./assets/css/inputFile.css"> -->
   <!-- Seleect2 -->
@@ -32,10 +32,6 @@
 
 <body>
   <div style="margin: 5vh;">
-    <!-- <div style="text-align: center;">
-      <img src="assets/images/logo.jpeg" style="max-width: 30vh; margin-bottom: 5%" alt="">
-    </div> -->
-    <!-- <a href="tel:+34000000000">Clicka para llamar</a> -->
 
     <div id=panel_codigoEmpresa style="display: none">
       <form class="form-horizontal" role="form" id="frm_registroEmpresa" action="">
@@ -123,66 +119,23 @@
       <h3>al inicio</h3>
     </div>
 
-    <div id="panel_gestionPasajero" style="display: none;margin-top: 3vh;text-align: right;">
-      <button type="button" class="btn btn-primary" id="btn_registrarPasajero" style="margin-bottom: 1vh;">Nuevo
+    <div id="panel_gestionPasajero" style="display: none;margin-top: 3vh;text-align: right;">      
+      <button type="button" class="btn btn-link" id="btn_registrarPasajero" style="margin-bottom: 1vh;">Nuevo
         Pasajero</button>
       <table id="tbl_pasajeros" class="display" style="width:100%">
       </table>
     </div>
 
-    <div id="panel_registroPasajero" style="display: none;margin-top: 3vh;text-align: right;">
-
-      <form style="text-align: left" class="form-horizontal" role="form" id="frm_registroPasajero"
-        name="frm_registroPasajero" action="">
-        <div class="form-group">
-          <label for="inp_identificacionPasajero" class="col-sm-3 control-label">Cédula
-            Identidad:</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="inp_identificacionPasajero" name="inp_identificacionPasajero"
-              placeholder="Digite la cedula" minlength="9" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inp_nombrePasajero" class="col-sm-3 control-label">Nombre Completo:</label>
-          <div class="col-sm-9">
-            <input id="inp_nombrePasajero" name="inp_nombrePasajero" type="text" class="form-control"
-              placeholder="Ingrese el nombre completo" minlength="5" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inp_codTransportista" class="col-sm-3 control-label">Codigo Transportista:</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="inp_codTransportista" name="inp_codTransportista"
-              placeholder="Digite el nombre del transportista" minlength="1" maxlength="5" required />
-          </div>
-        </div>
-        <hr>
-        <div class="col-md-12">
-          <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;" id="btn_crearPasajero"
-            value="Agregar" />
-        </div>
-        <br>
-        <div class="col-md-12">
-          <input type="submit" class="btn btn-danger" style="width: -webkit-fill-available;"
-            id="btn_frmAgregaPasajeroAtras" value="Atras" />
-        </div>
-      </form>
-
-
-
-    </div>
   </div>
 
 
   <!-- Modal -->
-  <div id="mdl_editaPasajero" class="modal fade" role="dialog">
+  <div id="mdl_Pasajero" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
     <div class="modal-dialog">
-
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Editar Pasajero</h4>
+          <h4 id="mdlTitle_Pasajero" class="modal-title">Actualizar</h4>
         </div>
         <div class="modal-body">
           <form style="text-align: left" class="form-horizontal" role="form" id="frm_registroPasajero"
@@ -220,9 +173,6 @@
                 id="btn_frmAgregaPasajeroAtras" value="Atras" />
             </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
 
@@ -275,6 +225,7 @@
 
   $(document).ready(function () {
     clear();
+
     opcion == "registroResponsable" ? $('#panel_codigoEmpresa').show() : opcion == "registroPasajero" ? pagePasajero() : false;
 
     function pagePasajero() {
@@ -295,7 +246,12 @@
       clear();
       $('#tbl_pasajeros').css('display', 'none');
       $("#btn_registrarPasajero").css('display', 'none');
-      $('#panel_registroPasajero').show()
+      $('#btn_crearPasajero').val('Agregar');
+
+      $('#mdlTitle_Pasajero').html('Registrar');
+      $('#mdl_Pasajero').modal('show');
+
+
     })
 
     $("#btn_frmAgregaPasajeroAtras").click(function (e) {
@@ -304,7 +260,8 @@
       $('#tbl_pasajeros').show();
       $("#panel_gestionPasajero").show();
       $("#btn_registrarPasajero").show();
-      $('#panel_registroPasajero').css('display', 'none');
+      // $('#panel_registroPasajero').css('display', 'none');
+      $('#mdl_Pasajero').modal('hide');
     })
 
     validateRules();

@@ -10,5 +10,6 @@ CREATE TABLE `gpsmovilpro`.`tc_user_passenger` (
   `passengerid` INT NOT NULL);
 
 ALTER TABLE `gpsmovilpro`.`tc_passenger` 
-ADD COLUMN `transportCompany` INT(5) NULL AFTER `document`,
-ADD COLUMN `status` INT(2) NULL AFTER `transportCompany`;
+ADD COLUMN `transportCode` INT(5) NULL AFTER `document`,
+ADD COLUMN `status` INT(2) NULL AFTER `transportCode`;
+
