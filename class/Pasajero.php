@@ -30,6 +30,9 @@ if( isset($_POST["action"])){
         case "Actualizar":
             echo json_encode($pasajero->Actualizar());
             break;
+        case "UpdateEstado":
+            echo json_encode($pasajero->UpdateEstado());
+            break;
     }
 }
 
@@ -40,6 +43,7 @@ class Pasajero{
     public $emailResponsable="";
     public $idResponsable="";
     public $cedula="";
+    public $estado="";
 
     function __construct(){
 
@@ -54,9 +58,35 @@ class Pasajero{
             $this->cedula=$obj["cedula"] ?? NULL;
             $this->nombre=$obj["nombre"] ?? NULL;
             $this->codigoEmpresa=$obj["codigoEmpresa"] ?? NULL;
+            $this->estado=$obj["estado"] ?? 0;
         }
     }
     
+    
+    function UpdateEstado(){
+        try {
+            $result = [];
+            $sql= 'UPDATE tc_passenger p
+                SET p.status = :status
+                WHERE id = :id;';
+            $param= array(':id'=>$this->id,
+                    ':status'=>$this->estado); 
+            $data= DATA::Ejecutar($sql, $param, false);
+            if($data){
+                $result = array("estado"=>$this->estado,"funcUpdate"=>true);
+                return $result;
+            }
+        }     
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la lista'))
+            );
+        }
+    }
+
     function ReadAll(){
         try {
             $sql= 'SELECT DISTINCT p.id, p.name, p.document, p.status FROM gpsmovilpro.tc_passenger p
@@ -112,7 +142,7 @@ class Pasajero{
             WHERE id = "'.$this->id.'";';
             $data= DATA::Ejecutar($sql);
             if($data){
-                return $data;
+                return $data[0];
             }
         }     
         catch(Exception $e) {
@@ -239,8 +269,6 @@ class Pasajero{
     }
 
     function Delete(){
-
-        
         $sql="DELETE FROM tc_user_passenger 
             WHERE passengerid = '" . $this->id . "';";
         $data = DATA::Ejecutar($sql);  

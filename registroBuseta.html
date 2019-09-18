@@ -119,7 +119,7 @@
       <h3>al inicio</h3>
     </div>
 
-    <div id="panel_gestionPasajero" style="display: none;margin-top: 3vh;text-align: right;">      
+    <div id="panel_gestionPasajero" style="display: none;margin-top: 3vh;text-align: right;">
       <button type="button" class="btn btn-link" id="btn_registrarPasajero" style="margin-bottom: 1vh;">Nuevo
         Pasajero</button>
       <table id="tbl_pasajeros" class="display" style="width:100%">
@@ -135,7 +135,33 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
+
+            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <button  class="btn btn-danger" style="float: right;"
+            id="btn_frmEliminarPasajer">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+
+            <!-- <input type="submit" class="btn btn-danger" style="float: right; font-size: 21px;font-weight: 700;"
+              id="btn_frmEliminarPasajer" value="Eliminar" >
+             
+            </input> -->
+
           <h4 id="mdlTitle_Pasajero" class="modal-title">Actualizar</h4>
+
+
+
+
+          <!-- <br>
+          <div class="col-md-12">
+            <input type="submit" class="btn btn-danger" style="width: -webkit-fill-available;"
+              id="btn_frmEliminarPasajer" value="Eliminar" />
+          </div> -->
+
+
+
+
+
         </div>
         <div class="modal-body">
           <form style="text-align: left" class="form-horizontal" role="form" id="frm_registroPasajero"
@@ -169,7 +195,7 @@
             </div>
             <br>
             <div class="col-md-12">
-              <input type="submit" class="btn btn-danger" style="width: -webkit-fill-available;"
+              <input type="submit" class="btn btn-primary" style="width: -webkit-fill-available;"
                 id="btn_frmAgregaPasajeroAtras" value="Atras" />
             </div>
           </form>
@@ -240,6 +266,11 @@
         pasajero.Search_cedula
       }
     });
+    
+    $("#btn_frmEliminarPasajer").click(function (e) {
+      e.preventDefault();
+      pasajero.EliminarPasajero();
+    })
 
     $("#btn_registrarPasajero").click(function (e) {
       e.preventDefault();
@@ -247,7 +278,7 @@
       $('#tbl_pasajeros').css('display', 'none');
       $("#btn_registrarPasajero").css('display', 'none');
       $('#btn_crearPasajero').val('Agregar');
-
+      $('#btn_frmEliminarPasajer').css('display', 'none');
       $('#mdlTitle_Pasajero').html('Registrar');
       $('#mdl_Pasajero').modal('show');
 
@@ -260,7 +291,6 @@
       $('#tbl_pasajeros').show();
       $("#panel_gestionPasajero").show();
       $("#btn_registrarPasajero").show();
-      // $('#panel_registroPasajero').css('display', 'none');
       $('#mdl_Pasajero').modal('hide');
     })
 

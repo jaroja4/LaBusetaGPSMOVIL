@@ -1,6 +1,6 @@
 class Pasajero {
     // Constructor
-    constructor(codigoEmpresa, nombreResponsable, idResponsable, emailResponsable, cedula, passwdResponsable, nombrePasajero, id) {
+    constructor(codigoEmpresa, nombreResponsable, idResponsable, emailResponsable, cedula, passwdResponsable, nombrePasajero, id, estado) {
         this.codigoEmpresa = codigoEmpresa || null;
         this.nombreResponsable = nombreResponsable || "";
         this.idResponsable = idResponsable || "";
@@ -9,6 +9,7 @@ class Pasajero {
         this.nombrePasajero = nombrePasajero || null;
         this.id = id || null;
         this.cedula = cedula || null;
+        this.estado = estado || 0;
     }
 
 
@@ -108,21 +109,20 @@ class Pasajero {
         }
     }
 
-    EditarPasajero(obj) {
-        pasajero.id = obj;
+    EditarPasajero() {
         $.ajax({
             type: "POST",
             url: "class/Pasajero.php",
             data: {
                 action: "LoadById",
-                id: obj
+                obj: JSON.stringify(pasajero)
             }
         })
             .done(function (e) {
                 var dataPasajero = JSON.parse(e);
-                $('#inp_identificacionPasajero').val(dataPasajero[0]["document"]);
-                $('#inp_nombrePasajero').val(dataPasajero[0]["name"]);
-                $('#inp_codTransportista').val(dataPasajero[0]["transportCode"]);
+                $('#inp_identificacionPasajero').val(dataPasajero["document"]);
+                $('#inp_nombrePasajero').val(dataPasajero["name"]);
+                $('#inp_codTransportista').val(dataPasajero["transportCode"]);
                 $('#tbl_pasajeros').css('display', 'none');
                 $("#btn_registrarPasajero").css('display', 'none');
                 $('#mdlTitle_Pasajero').html('Actualizar');
@@ -131,11 +131,7 @@ class Pasajero {
             })
     }
 
-    CancelaViajePasajero(obj) {
-        alert("Cancelar viaje para pasajero con id: " + obj);
-    }
-
-    EliminarPasajero(obj) {
+    EliminarPasajero() {
         Swal.fire({
             title: 'Esta seguro?',
             text: "Desea borrar este pasajero!",
@@ -152,17 +148,21 @@ class Pasajero {
                     url: "class/Pasajero.php",
                     data: {
                         action: "Delete",
-                        id: obj
+                        obj: JSON.stringify(pasajero)
                     }
                 })
                     .done(function (e) {
-                        pasajero.ReadAll_list;
-
+                        pasajero.ReadAll_list;                        
+                        $('#tbl_pasajeros').show();
+                        $("#panel_gestionPasajero").show();
+                        $("#btn_registrarPasajero").show();
+                        $('#mdl_Pasajero').modal('hide');
                         Swal.fire(
                             'Eliminado!',
                             'Pasajero Eliminado.',
                             'success'
                         )
+
                     })
                     .always(function (e) {
 
@@ -219,35 +219,64 @@ class Pasajero {
 
             $('#tbl_pasajeros tbody').on('click', 'tr', function () {
                 // pasajero.clear;
-                // pasajero.id = $('#tbl_pasajeros').DataTable().row(this).data().id;
-                // pasajero.cargarResponsablebyID;
+                pasajero.id = $('#tbl_pasajeros').DataTable().row(this).data().id;
+                $('#btn_frmEliminarPasajer').show();
+                pasajero.EditarPasajero();
             });
 
         }
     }
 
-    handleClick(obj, id) {
+    handleStatus(obj, id) {
+        pasajero.id = id;
         if (obj.checked) {
-            // alert("check" + id);
-            Swal.fire({
-                position: 'top-start',
-                type: 'success',
-                title: 'Transporte Habilitado',
-                showConfirmButton: false,
-                timer: 1000,
-                width: '40%'
-            })
+            pasajero.estado = 1;
+            pasajero.ActualizaEstado();
         }
         else {
-            Swal.fire({
-                position: 'top-start',
-                type: 'info',
-                title: 'Transporte Deshabilitado',
-                showConfirmButton: false,
-                width: '40%',
-                timer: 1000
-            })
+            pasajero.estado = 0;
+            pasajero.ActualizaEstado();
         }
+    }
+
+    ActualizaEstado() {
+        $.ajax({
+            type: "POST",
+            url: "class/Pasajero.php",
+            data: {
+                action: "UpdateEstado",
+                obj: JSON.stringify(pasajero)
+            }
+        })
+            .done(function (e) {
+                if (e) {
+                    var dataEstado = JSON.parse(e);
+                    var titulo, tipo = "";
+                    switch (dataEstado["estado"]) {
+                        case 0:
+                            tipo = "info";
+                            titulo = 'Transporte Deshabilitado';
+                            break;
+                        case 1:
+                            tipo = "success";
+                            titulo = 'Transporte Habilitado';
+                            break;
+                        default:
+                            tipo = "error";
+                            titulo = 'Contactar Soporte';
+                            break;
+
+                    }
+                    Swal.fire({
+                        position: 'top-start',
+                        type: tipo,
+                        title: titulo,
+                        showConfirmButton: false,
+                        width: '40%',
+                        timer: 1000
+                    })
+                }
+            })
     }
 
     drawBoton(id, estado) {
@@ -269,7 +298,7 @@ class Pasajero {
 
         }
 
-        var dropPasajero = `<input class="apple-switch" onclick='pasajero.handleClick(this,${id})' type="checkbox">`;
+        var dropPasajero = `<input class="apple-switch" onclick='pasajero.handleStatus(this,${id})' checked type="checkbox">`;
         //     var dropPasajero = `<div class="dropdown">
         //     <button class="btn btn-${btn_clase} dropdown-toggle" type="button" data-toggle="dropdown">
         //     <i class="fa fa-address-card-o " aria-hidden="true"></i> 
