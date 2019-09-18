@@ -16,7 +16,7 @@ class Usuario {
 
     get Registrar() {
         var miAccion = 'Registrar';
-        this.attributes = { cedula: this.cedula, codigoEmpresa: this.codigoEmpresa};
+        this.attributes = { cedula: this.cedula, codigoEmpresa: this.codigoEmpresa };
         $.ajax({
             type: "POST",
             url: "class/Usuario.php",
@@ -34,7 +34,9 @@ class Usuario {
                             title: 'Usted ya posee cuenta con nosotros!'
                         })
                     }
-                    if (data == "success"){
+                    if (data == "success") {
+                        $('#panel_crearCuenta').css('display', 'none');
+                        $("#panel_volver").show();
                         Swal.fire({
                             title: 'Listo!',
                             type: 'success',
@@ -55,7 +57,7 @@ class Usuario {
         var miAccion = 'Buscar_id';
         this.id = this.codigoEmpresa;
         this.correo = "sinEmail";
-        this.attributes = { cedula: "sinCedula"};
+        this.attributes = { cedula: "sinCedula" };
         $.ajax({
             type: "POST",
             url: "class/Usuario.php",
@@ -66,7 +68,7 @@ class Usuario {
         })
             .done(function (e) {
                 var data = JSON.parse(e);
-                data!=false?usuario.ocultaFrmEmpresa:usuario.empresaError;
+                data != false ? usuario.ocultaFrmEmpresa : usuario.empresaError;
             })
             .always(function (e) {
                 this.id = null;
@@ -74,27 +76,27 @@ class Usuario {
 
     }
 
-    get ocultaTodosFrm(){            
-        this.id = null;  
+    get ocultaTodosFrm() {
+        this.id = null;
         $('#panel_codigoEmpresa').css('display', 'none');
         $('#panel_crearCuenta').css('display', 'none');
         $('#panel_volver').css('display', 'none');
     }
 
-    get ocultaFrmEmpresa(){            
-        this.id = null;  
+    get ocultaFrmEmpresa() {
+        this.id = null;
         $('#panel_codigoEmpresa').css('display', 'none');
         $('#panel_crearCuenta').show();
     }
 
-    get empresaError(){    
+    get empresaError() {
         $("#inp_codigoEmpresa").val("");
         Swal.fire({
             type: 'error',
             title: 'Oops...',
             text: 'El codigo de empresa no existe!',
             timer: 1500
-          })
+        })
     }
     // get clearModalNuevoUsuario(){
     //     $("#inp_nombre").val("");

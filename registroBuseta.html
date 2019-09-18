@@ -136,13 +136,12 @@
       <div class="modal-content">
         <div class="modal-header">
 
-            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-            <button  class="btn btn-danger" style="float: right;"
-            id="btn_frmEliminarPasajer">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+          <button class="btn btn-danger" style="float: right;" id="btn_frmEliminarPasajer">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
 
-            <!-- <input type="submit" class="btn btn-danger" style="float: right; font-size: 21px;font-weight: 700;"
+          <!-- <input type="submit" class="btn btn-danger" style="float: right; font-size: 21px;font-weight: 700;"
               id="btn_frmEliminarPasajer" value="Eliminar" >
              
             </input> -->
@@ -266,7 +265,7 @@
         pasajero.Search_cedula
       }
     });
-    
+
     $("#btn_frmEliminarPasajer").click(function (e) {
       e.preventDefault();
       pasajero.EliminarPasajero();
@@ -411,7 +410,6 @@
           usuario.correo = $("#inp_emailResponsable").val();
           usuario.passwd = $("#inp_passwdResponsable").val();
           usuario.Registrar;
-          this.clear();
         }
       });
 
