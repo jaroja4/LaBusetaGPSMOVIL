@@ -38,23 +38,15 @@ class Usuario {
                         case "success":
                             $('#panel_crearCuenta').css('display', 'none');
                             $("#panel_volver").show();
-                            Swal.fire({
-                                title: 'Listo!',
-                                type: 'success',
-                                text: "Ahora puede ingresar con su correo y contraseña"
-                            })
+                            break;
                         default:
-                            tipo = "error";
-                            titulo = 'Contactar Soporte';
+                            alert("ERROR");
                             break;
     
                     }
                 }
                 else{
-                    Swal.fire({
-                        type: 'error',
-                        title: 'data error'
-                    })
+                    alert("ERROR");
                 }
             })
             .always(function (e) {
