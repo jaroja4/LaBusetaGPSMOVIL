@@ -217,11 +217,12 @@ class Pasajero {
                 }
             });
 
-            $('#tbl_pasajeros tbody').on('click', 'tr', function () {
-                // pasajero.clear;
-                pasajero.id = $('#tbl_pasajeros').DataTable().row(this).data().id;
-                $('#btn_frmEliminarPasajer').show();
-                pasajero.EditarPasajero();
+            $('#tbl_pasajeros tbody').on('click', 'td', function () {
+                if ( ! $(this.firstChild).hasClass("apple-switch") ){
+                    pasajero.id = $('#tbl_pasajeros').DataTable().row(this.parent).data().id;
+                    $('#btn_frmEliminarPasajer').show();
+                    pasajero.EditarPasajero();
+                }
             });
 
         }
@@ -280,35 +281,20 @@ class Pasajero {
     }
 
     drawBoton(id, estado) {
-        var btn_clase = "";
-        var btn_viaje = "";
         switch (estado) {
             case "0":
-                btn_clase = "danger";
-                btn_viaje = `<p style=" margin-left: 5px;" onclick="pasajero.HabilitaViajePasajero(${id})">Habilitar</p>`;
+                estado = "";
                 break;
             case "1":
-                btn_clase = "success";
-                btn_viaje = `<p style=" margin-left: 5px;" onclick="pasajero.DeshabilitaViajePasajero(${id})">Deshabilitar</p>`;
+                estado = "checked";
                 break;
             default:
-                btn_clase = "danger";
-                btn_viaje = `<p style=" margin-left: 5px;" onclick="pasajero.HabilitaViajePasajero(${id})">Habilitar</p>`;
+                estado = "";
                 break;
 
         }
 
-        var dropPasajero = `<input class="apple-switch" onclick='pasajero.handleStatus(this,${id})' checked type="checkbox">`;
-        //     var dropPasajero = `<div class="dropdown">
-        //     <button class="btn btn-${btn_clase} dropdown-toggle" type="button" data-toggle="dropdown">
-        //     <i class="fa fa-address-card-o " aria-hidden="true"></i> 
-        //     <span class="caret"></span></button>
-        //     <ul class="dropdown-menu">
-        //       <li><p style=" margin-left: 5px;" onclick="pasajero.EditarPasajero(${id})">Modificar</p></li>
-        //       <li>${btn_viaje}</li>
-        //       <li><p style=" margin-left: 5px;" onclick="pasajero.EliminarPasajero(${id})">Eliminar</p></li>
-        //     </ul>
-        //   </div>`;
+        var dropPasajero = `<input class="apple-switch" onclick='pasajero.handleStatus(this,${id})' ${estado} type="checkbox">`;
         return dropPasajero;
     }
 }
