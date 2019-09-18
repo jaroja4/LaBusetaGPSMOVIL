@@ -180,6 +180,9 @@ class Pasajero {
 
             $('#tbl_pasajeros').DataTable({
                 data: dataPasajero,
+                language: {
+                    "emptyTable": "Sin pasajeros registrados"
+                },
                 destroy: true,
                 autoWidth: false,
                 paging: false,
