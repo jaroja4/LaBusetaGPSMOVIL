@@ -28,21 +28,33 @@ class Usuario {
             .done(function (e) {
                 var data = JSON.parse(e);
                 if (data) {
-                    if (data == "existe") {
-                        Swal.fire({
-                            type: 'info',
-                            title: 'Usted ya posee cuenta con nosotros!'
-                        })
+                    switch (data) {
+                        case "existe":
+                            Swal.fire({
+                                type: 'info',
+                                title: 'Usted ya posee cuenta con nosotros!'
+                            })
+                            break;
+                        case "success":
+                            $('#panel_crearCuenta').css('display', 'none');
+                            $("#panel_volver").show();
+                            Swal.fire({
+                                title: 'Listo!',
+                                type: 'success',
+                                text: "Ahora puede ingresar con su correo y contraseña"
+                            })
+                        default:
+                            tipo = "error";
+                            titulo = 'Contactar Soporte';
+                            break;
+    
                     }
-                    if (data == "success") {
-                        $('#panel_crearCuenta').css('display', 'none');
-                        $("#panel_volver").show();
-                        Swal.fire({
-                            title: 'Listo!',
-                            type: 'success',
-                            text: "Ahora puede ingresar con su correo y contraseña"
-                        })
-                    }
+                }
+                else{
+                    Swal.fire({
+                        type: 'error',
+                        title: 'data error'
+                    })
                 }
             })
             .always(function (e) {
