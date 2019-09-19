@@ -245,7 +245,7 @@
             
             $data='{"userId":"'.$userId.'","deviceId":'.$deviceId.'}';
             
-            return self::curl('/api/permissions','POST',$sessionId,$data,array(self::$jsonC));
+            return self::curl('/api/permissions','POST',self::$sessionId,$data,array(self::$jsonC));
         }
 
         public static function removeUserDevice($userId,$deviceId){

@@ -23,7 +23,7 @@
     <!-- bootstrap-daterangepicker -->
     <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <!-- <link href="assets/css/custom.min.css" rel="stylesheet"> -->
+    <link href='assets/css/registro.css' rel='stylesheet' type='text/css'>
     <link href="vendors/dropzone/dropzone.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="./assets/css/inputFile.css"> -->
     <!-- Seleect2 -->
@@ -35,15 +35,16 @@
         <div id=panel_selectDevice style="display: nones">
             <form class="form-horizontal" role="form" id="frm_selDevice" action="">
                 <div class="form-group">
-                    <label for="sel1">Seleccione su BuseTica:</label>
+                    <label for="sel1" style="margin-bottom: 5%;">Seleccione su BuseTica:</label>
                     <select class="form-control" id="sel_frmSelDevice">
-
                     </select>
                 </div>
+                <table id="tbl_pasajeros" class="display" style="width:100%">
+                </table>
                 <hr>
                 <div class="col-md-12">
                     <input type="submit" class="btn btn-success" style="width: -webkit-fill-available;"
-                        id="btn_frm_SelDeviceContinuar" value="Continuar" />
+                        id="btn_frm_SelDeviceContinuar" value="Iniciar Viaje" />
                 </div>
             </form>
 
@@ -90,10 +91,13 @@
 <script>
     $(document).ready(function () {
         var url = new URL(window.location.href);
-        var responsableId = null;
         driver.id = url.searchParams.get("responsableId");
-
         driver.ReadDeviceByDriver;
+        driver.ReadPassagerByTransportCode
+
+        $(sel_frmSelDevice).change(function(){
+            driver.idBusetica = $(this).val();
+        })
     })
 
 </script>
