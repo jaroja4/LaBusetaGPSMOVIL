@@ -24,7 +24,7 @@ class Pasajero {
             }
         })
             .done(function (e) {
-                pasajero.ReadAll_list;
+                pasajero.GetPasajero_Responsable;
                 var data = JSON.parse(e);
                 var titulo = "Soporte!";
                 var tipo = "success";
@@ -64,8 +64,8 @@ class Pasajero {
             });
     }
 
-    get ReadAll_list() {
-        var miAccion = 'ReadAll';
+    get GetPasajero_Responsable() {
+        var miAccion = 'GetPasajero_Responsable';
         $.ajax({
             type: "POST",
             url: "class/Pasajero.php",
@@ -152,7 +152,7 @@ class Pasajero {
                     }
                 })
                     .done(function (e) {
-                        pasajero.ReadAll_list;                        
+                        pasajero.GetPasajero_Responsable;                        
                         $('#tbl_pasajeros').show();
                         $("#panel_gestionPasajero").show();
                         $("#btn_registrarPasajero").show();
@@ -222,7 +222,7 @@ class Pasajero {
 
             $('#tbl_pasajeros tbody').on('click', 'td', function () {
                 if ( ! $(this.firstChild).hasClass("apple-switch") ){
-                    pasajero.id = $('#tbl_pasajeros').DataTable().row(this.parent).data().id;
+                    pasajero.id = $('#tbl_pasajeros').DataTable().row(this.parentNode.rowIndex).data().id;
                     $('#btn_frmEliminarPasajer').show();
                     pasajero.EditarPasajero();
                 }

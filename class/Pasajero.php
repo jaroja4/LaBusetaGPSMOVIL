@@ -15,8 +15,8 @@ if( isset($_POST["action"])){
         case "Registrar":
             echo json_encode($pasajero->Registrar());
             break;
-        case "ReadAll":
-            echo json_encode($pasajero->ReadAll());
+        case "GetPasajero_Responsable":
+            echo json_encode($pasajero->GetPasajero_Responsable());
             break;
         case "Search_cedula":
             echo json_encode($pasajero->Search_cedula());
@@ -87,7 +87,7 @@ class Pasajero{
         }
     }
 
-    function ReadAll(){
+    function GetPasajero_Responsable(){
         try {
             $sql= 'SELECT DISTINCT p.id, p.name, p.document, p.status FROM gpsmovilpro.tc_passenger p
             INNER JOIN tc_user_passenger up

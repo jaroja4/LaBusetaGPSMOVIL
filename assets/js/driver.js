@@ -42,18 +42,6 @@ class Driver {
             });
     }
 
-    handleStatus(obj, idPasajero) {
-        driver.idPasajero = idPasajero;
-        if (obj.checked) {
-            driver.pasajeroEstado = 1;
-            driver.PasajeroByBusetica;
-        }
-        else {
-            driver.pasajeroEstado = 0;
-            driver.PasajeroByBusetica;
-        }
-    }
-
     get PasajeroByBusetica(){
         $.ajax({
             type: "POST",
@@ -69,6 +57,18 @@ class Driver {
             .fail(function (e) {
                 // dataCenter.showError(e);
             });
+    }
+
+    handleStatus(obj, idPasajero) {
+        driver.idPasajero = idPasajero;
+        if (obj.checked) {
+            driver.pasajeroEstado = 1;
+            driver.PasajeroByBusetica;
+        }
+        else {
+            driver.pasajeroEstado = 0;
+            driver.PasajeroByBusetica;
+        }
     }
 
     drawPasajerosDataTable(e) {
