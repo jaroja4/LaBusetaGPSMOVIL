@@ -176,6 +176,13 @@ class Pasajero{
                             ':transportCode'=>$this->codigoEmpresa,
                             ':status'=>1);            
                     $data= DATA::Ejecutar($sql, $param, false);
+
+                    $sql= 'INSERT into tc_passenger _user
+                    (passengerid, userid)
+                    VALUES (:passengerid, :userid);';
+                    $param= array(':passengerid'=>$this->codigoEmpresa, 
+                            ':userid'=>$this->id);            
+                    $data= DATA::Ejecutar($sql, $param, false);
                 }
                 else
                     return "pasajeroRepetido";

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+    <title>GPSMOVIL | Transporte</title>
+    <!-- Bootstrap -->
+    <link href="vendors/bootstrap4.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: rgb(240, 240, 240);
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+    .listaContacto {
+        padding: 10px;
+    }
+
+    .empresa {
+        border-bottom: groove;
+        border-color: darkgray;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+
+    .telefono {
+        margin-top: 12px;
+        width: 50px;
+        height: 50px;
+    }
+</style>
+
+<body>
+    <div id="lista" class="listaContactos">
+        <div class="container-fluid">
+            <div class="row empresa">
+                <div class="col-8">
+                    <h3> Nombre de la empresa </h3>
+                    <h4> Correo: email@algo.com </h4>
+                    <h5> Telefono: 2222-0000 </h5>
+                </div>
+                <div class="col-4">
+                    <a href="tel:123-456-7890">
+                        <img class="telefono" src="assets/images/telefonoVector.png">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row empresa">
+                <div class="col-8">
+                    <h3> Nombre de la empresa </h3>
+                    <h4> Correo: email@algo.com </h4>
+                    <h5> Telefono: 2222-0000 </h5>
+                </div>
+                <div class="col-4">
+                    <a href="tel:123-456-7890">
+                        <img class="telefono" src="assets/images/telefonoVector.png">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row empresa">
+                <div class="col-8">
+                    <h3> Nombre de la empresa </h3>
+                    <h4> Correo: email@algo.com </h4>
+                    <h5> Telefono: 2222-0000 </h5>
+                </div>
+                <div class="col-4">
+                    <a href="tel:123-456-7890">
+                        <img class="telefono" src="assets/images/telefonoVector.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!-- jQuery -->
+<script src="assets/js/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="vendors/bootstrap4.0/js/bootstrap.js"></script>
+
+<script>
+    var url = new URL(window.location.href);
+    var responsableId = url.searchParams.get("responsableId");
+
+    $(document).ready(function () {
+        clear();
+        Get_Empresa_Usuario();
+    })
+
+    function clear() {
+          $(".container-fluid").html("");
+    }
+
+    function Get_Empresa_Usuario() {
+        $.ajax({
+            type: "POST",
+            url: "class/Driver.php",
+            data: {
+                action: "Get_Empresa_Usuario",
+                id: responsableId
+            }
+        })
+            .done(function (e) {
+                // driver.drawPasajerosDataTable(e);
+                if (e) {
+                    var dataEmpresas = JSON.parse(e);
+                    drawEmpresas(dataEmpresas);
+                }
+            })
+            .fail(function (e) {
+                // dataCenter.showError(e);
+            });
+    }
+
+    function drawEmpresas(dataEmpresas) {
+        dataEmpresas.forEach(function (empresa) {
+            $(".container-fluid").append(`
+            
+            <div class="row empresa">
+                <div class="col-8">
+                    <h3> ${empresa.name} </h3>
+                    <h4> Correo: ${empresa.email} </h4>
+                    <h5> Telefono: ${empresa.phone} </h5>
+                </div>
+                <div class="col-4">
+                    <a href="tel:${empresa.phone}">
+                        <img class="telefono" src="assets/images/telefonoVector.png">
+                    </a>
+                </div>
+            </div>
+            `);
+        });
+        
+
+    }
+</script>
+
+</html>

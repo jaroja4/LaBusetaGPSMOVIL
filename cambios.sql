@@ -12,4 +12,3 @@ CREATE TABLE `gpsmovilpro`.`tc_user_passenger` (
 ALTER TABLE `gpsmovilpro`.`tc_passenger` 
 ADD COLUMN `transportCode` INT(5) NULL AFTER `document`,
 ADD COLUMN `status` INT(2) NULL AFTER `transportCode`;
-

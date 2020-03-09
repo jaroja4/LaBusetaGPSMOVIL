@@ -1,0 +1,78 @@
+<DOCTYPE html>
+  <html>
+
+  <head>
+    <title>Vue Demo #1: The Box App</title>
+    <meta charset='utf-8' />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style type="text/css">
+      .box {
+        height: 200px;
+        width: 200px;
+        text-align: center;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .green {
+        background-color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Vue Demo #1</h1>
+    <div id="vapp">
+      {{ info }}
+      <colored-box class="red" v-show="display == 'redbox'"></colored-box>
+      <colored-box class="green" v-show="display == 'greenbox'"></colored-box>
+    </div>
+    <!-- Our View App goes at the end of the document -->
+    <script>
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic amFyb2phNEBnbWFpbC5jb206SmFzb24xOTg5Kw=='
+      }
+      const data = {
+        "deviceId": 192,
+        "type": "custom",
+        "attributes": {
+          "data": "setdigout 1??"
+        }
+      }
+      Vue.component('ColoredBox', {
+        template: "<div class=\"box\"><button v-on:click=\"toggleMe()\">Toggle Now</button> </div>",
+        methods: {
+          toggleMe() {
+            this.$root.toggleBox()
+          }
+        }
+      })
+      const vueApp = new Vue({
+        el: '#vapp',
+        data() {
+          return {
+            display: 'redbox',
+            info: null
+          }
+        },
+        methods: {
+          toggleBox() {
+            this.display == 'redbox' ? this.display = 'greenbox' : this.display = 'redbox'
+          }
+        },
+        mounted() {
+          axios
+            .post('http://gpsmovilpro.com:8082/api/commands/send', data, { headers: headers }
+            )
+            .then(response => (console.log(response)))
+            .catch(error => console.log(error))
+        }
+      })
+    </script>
+  </body>
+
+  </html>

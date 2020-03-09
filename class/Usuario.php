@@ -20,6 +20,9 @@ if( isset($_POST["action"])){
         case "Buscar_id":
             echo json_encode($usuario->ValidarUsuario());
             break;
+        case "Get_Empresa_Usuario":
+            echo json_encode($usuario->Get_Empresa_Usuario());
+            break;
     }
 }
 
@@ -139,6 +142,18 @@ class Usuario{
             return false;        
     }
 
+    public function Get_Empresa_Usuario(){
+        $sql="SELECT userid, manageduserid
+            FROM tc_user_user
+            WHERE userid = :userid
+            AND manageduserid = :manageduserid;";
+        $param= array(':userid'=>$this->id, ':manageduserid'=>$codigoEmpresa);            
+        $data= DATA::Ejecutar($sql, $param);
+        if ($data)
+            return $data[0]["userid"];
+        else
+            return false;        
+    }
     // function Login(){
     //     try {
     //         $a = GPSMOVIL::login($this->email,$this->passwd);

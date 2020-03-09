@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPSMOVIL | API</title>
+</head>
+
+<body>
+
+</body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+  // Dropzone.autoDiscover = false;
+  $(document).ready(function () {
+    var data = {
+      "deviceId": 192,
+      "type": "custom",
+      "attributes": {
+        "data":   "setdigout 0??"
+      }
+    }
+
+    $.ajax({
+        type: 'post',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: 'http://gpsmovilpro.com:8082/api/commands/send',
+        headers: {
+            "Authorization": "Basic " + btoa("jaroja4@gmail.com" + ":" + "Jason1989+")
+        },
+        success: function (response) {
+            console.log(response);
+            console.log(JSON.stringify(data));
+        }
+    });
+  })
+</script>

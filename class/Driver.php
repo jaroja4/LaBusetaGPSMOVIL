@@ -18,6 +18,9 @@ if( isset($_POST["action"])){
         case "PasajeroByBusetica":
             echo json_encode($driver->PasajeroByBusetica());
             break;
+        case "Get_Empresa_Usuario":
+            echo json_encode($driver->Get_Empresa_Usuario());
+            break;
     }
 }
 
@@ -107,6 +110,37 @@ class Driver{
                     else
                         $API_res = GPSMOVIL::removeUserDevice($user["userid"], $this->idBusetica);                    
                 }
+            }
+                
+        }     
+        catch(Exception $e) {
+            error_log("[ERROR]  (".$e->getCode()."): ". $e->getMessage());
+            header('HTTP/1.0 400 Bad error');
+            die(json_encode(array(
+                'code' => $e->getCode() ,
+                'msg' => 'Error al cargar la lista'))
+            );
+        }
+    }
+
+    function Get_Empresa_Usuario(){
+        try {
+            $sql="SELECT DISTINCT u.id, u.name, u.email, u.phone, u.attributes
+                FROM tc_users u, 
+                    (
+                    SELECT p.transportCode 
+                    FROM tc_passenger p
+                    INNER JOIN tc_user_passenger u_p
+                    ON p.id = u_p.passengerid
+                    INNER JOIN tc_users u
+                    ON u.id = u_p.userid
+                    WHERE u.id = :id
+                    ) AS empresas
+                WHERE u.id = empresas.transportCode;";
+            $param= array(':id'=>$this->id);
+            $data= DATA::Ejecutar($sql, $param);
+            if ($data){
+               return $data;
             }
                 
         }     
